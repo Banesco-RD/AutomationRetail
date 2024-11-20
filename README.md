@@ -1,2 +1,0 @@
-# AutomationRetail
-SDET
