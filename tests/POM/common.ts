@@ -8,6 +8,7 @@ export class common{
     readonly txtUser: Locator;
     readonly dropUser: Locator;
     readonly btnLogOut: Locator;
+    readonly validateLogin: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -16,13 +17,19 @@ export class common{
         this.txtUser = page.locator("#username");
         this.dropUser = page.locator("div.user-context-dropdown");
         this.btnLogOut = page.locator("button[data-role='logout']");
+        this.validateLogin = page.locator("div.user-context-dropdown");
     }
 
-    async goToBanescoRetail(){
+    async goToBanescoRetailLogin(){
         await this.page.goto(process.env.BASEURL as string);
         await this.btnLanguage.click();
         await this.btnSpanish.click();
         await expect(this.txtUser).toBeVisible();
+    }
+
+    async goToBanescoRetail(){
+        await this.page.goto(process.env.BASEURL as string);
+        await expect(this.validateLogin).toBeVisible();
     }
 
     async logOut(){

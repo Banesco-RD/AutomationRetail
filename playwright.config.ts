@@ -53,7 +53,10 @@ export default defineConfig({
     },
     {
       name: 'Site_Chrome',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: './tests/specs/setup/sessionFile.json'
+      },
       dependencies: ['setup'],
     },
     /*

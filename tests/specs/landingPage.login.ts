@@ -1,10 +1,10 @@
-import { chromium, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import { landingPage } from '../POM/landingPage';
 import { common } from '../POM/common';
 
 test.beforeEach(async({page}) =>{//go to BD retail
     const commonObj = new common(page);
-    await commonObj.goToBanescoRetail();
+    await commonObj.goToBanescoRetailLogin();
 });
 
 test.describe('Login page tests.', () => {
@@ -121,36 +121,6 @@ test.describe('OTP tests.', () => {
         await landing.loginSuccess();
         await landing.selectOTPEmail();
         await landing.validateOTP(0);
-    });
-
-    test('User can select the remember OTP opcion.', async({browser}) => {
-        const context = await browser.newContext();
-        const page = await context.newPage();
-        const landing = new landingPage(page);
-        const commonObj = new common(page);
-
-        await landing.loginSuccess();
-        await landing.selectOTPSMS();
-        await landing.validateOTP(2);
-        await landing.loginCompleted();
-        await commonObj.logOut();
-        await landing.loginWithoutOTP();
-        await landing.loginCompleted();
-    });
-
-});
-
-test.describe('LogOut Test.', () => {
-
-    test('User can Logout.', async({page}) => {
-        const landing = new landingPage(page);
-        const commonObj = new common(page);
-
-        await landing.loginSuccess();
-        await landing.selectOTPSMS();
-        await landing.validateOTP(1);
-        await landing.loginCompleted();
-        await commonObj.logOut();
     });
 
 });

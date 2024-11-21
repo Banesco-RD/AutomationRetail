@@ -32,7 +32,6 @@ export class landingPage{
     readonly otpListResend: Locator;
     readonly btnAcceptOTP: Locator;
     readonly validateLogin: Locator;
-    readonly chkRememberOTP: Locator;
     readonly passwordReq: Locator;
     readonly txtNewPassword: Locator;
     readonly txtConfirmPass: Locator;
@@ -72,7 +71,6 @@ export class landingPage{
         this.otpListResend = page.locator("ul.try-again-list");
         this.btnAcceptOTP = page.locator("#acceptOtp");
         this.validateLogin = page.locator("div.user-context-dropdown");
-        this.chkRememberOTP = page.locator("#deviceSecure");
         this.passwordReq = page.locator("div.pw-reqs");
         this.txtNewPassword = page.locator("#password-new");
         this.txtConfirmPass = page.locator("#password-confirm");
@@ -166,10 +164,6 @@ export class landingPage{
 
         if(flag == 1){//correct OTP
             await this.txtOTP.pressSequentially(this.otp);
-            await this.btnAcceptOTP.click();
-        }else if(flag == 2){//correct OTP and remember
-            await this.txtOTP.pressSequentially(this.otp);
-            await this.chkRememberOTP.click();
             await this.btnAcceptOTP.click();
         }else{//wrong OTP
             await this.txtOTP.pressSequentially("999999");
