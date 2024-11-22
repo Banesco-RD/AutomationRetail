@@ -9,6 +9,7 @@ export class common{
     readonly dropUser: Locator;
     readonly btnLogOut: Locator;
     readonly validateLogin: Locator;
+    readonly pageHeader: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -18,6 +19,13 @@ export class common{
         this.dropUser = page.locator("div.user-context-dropdown");
         this.btnLogOut = page.locator("button[data-role='logout']");
         this.validateLogin = page.locator("div.user-context-dropdown");
+        this.pageHeader = page.locator("div.heading-widget h3.bb-heading-widget__heading");
+    }
+
+    async pageTitle(text){
+        await expect(this.pageHeader).toBeVisible();
+        await expect(this.pageHeader).toContainText(text);
+
     }
 
     async goToBanescoRetailLogin(){
