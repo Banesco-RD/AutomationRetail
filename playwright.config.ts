@@ -44,12 +44,12 @@ export default defineConfig({
   projects: [
     { 
       name: 'setup', 
-      testMatch: /.*\.setup\.ts/ ,
+      testMatch: /.*\.setup\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     { 
       name: 'Login_Chrome',
-      testMatch: /.*\.login\.ts/ ,
+      testMatch: /.*\.login\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
