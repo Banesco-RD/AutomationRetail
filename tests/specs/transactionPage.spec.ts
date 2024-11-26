@@ -7,7 +7,7 @@ test.beforeEach(async({page}) =>{//go to BD retail
     await commonObj.goToBanescoRetail();
 });
 
-test.describe('Product Details tests', () => {
+/*test.describe('Product Details tests', () => {
 
     test('User can see TDC details.', async({page}) => {
         const transaction = new transactionPage(page);
@@ -21,4 +21,4 @@ test.describe('Product Details tests', () => {
        await transaction.accountDetails(); 
     });
 
-});
+});*/

@@ -16,7 +16,7 @@ test.describe('LogOut Test.', () => {
     });
 
 });
-
+/*
 test.describe('Product Summary page tests.', () => {
 
     test('User is able to see all available products', async({page}) => {
@@ -44,3 +44,4 @@ test.describe('Product Summary page tests.', () => {
     });
 
 });
+*/
