@@ -41,17 +41,15 @@ jobs:
           region: us-east-1  # Update region if needed
           key: ${{ env.PLAYWRIGHT_HTML_OUTPUT_DIR }} # Add trailing slash for directory structure
           recursive: true
-
-      - name: Upload main report index to S3 (adjust bucket names)
-        uses: aws-actions/aws-s3-cp@v1
-        with:
-          src: index.html
-          bucket: mercury.banesco.do
-          region: us-east-1  # Update region if needed
-          key: index.html
-
-      - name: Invalidate CloudFront cache
-        uses: aws-actions/aws-cloudfront-create-invalidation@v1
-        with:
-          distribution-id: EZ4EDBV6ZDBYN
-          paths: "/*"
+      #- name: Upload main report index to S3 (adjust bucket names)
+      #  uses: aws-actions/aws-s3-cp@v1
+      #  with:
+      #    src: index.html
+      #    bucket: mercury.banesco.do
+      #    region: us-east-1  # Update region if needed
+      #    key: index.html
+      #- name: Invalidate CloudFront cache
+      #  uses: aws-actions/aws-cloudfront-create-invalidation@v1
+      #  with:
+      #    distribution-id: EZ4EDBV6ZDBYN
+      #    paths: "/*"
