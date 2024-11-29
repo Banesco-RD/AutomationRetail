@@ -28,6 +28,14 @@ export class transactionPage{
     readonly transactionItemList: Locator;
     readonly btnDownloadPDF: Locator;
     readonly btnDownloadCSV: Locator;
+    readonly detailsAccName: Locator;
+    readonly detailsBalance: Locator;
+    readonly detailsCategory: Locator;
+    readonly detailsAmountLabel: Locator;
+    readonly detailsName: Locator;
+    readonly detailsInfo: Locator;
+    readonly detailsImgHeader: Locator;
+    readonly btnAddNote: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -56,6 +64,14 @@ export class transactionPage{
         this.transactionItemList = page.locator("div[role='listitem']");
         this.btnDownloadPDF = page.locator("a[role='menuitem']").nth(0);
         this.btnDownloadCSV = page.locator("a[role='menuitem']").nth(1);
+        this.detailsAccName = page.locator("div.account-name");
+        this.detailsBalance = page.locator("div.balance");
+        this.detailsCategory = page.locator("div.categoryLabel");
+        this.detailsAmountLabel = page.locator("div[class*='details__detalle'] div div").nth(5);
+        this.detailsName = page.locator("div.pb-4 li label");
+        this.detailsInfo = page.locator("div.pb-4 li span");
+        this.detailsImgHeader = page.locator("div.my-3 h3");
+        this.btnAddNote = page.locator("button.mt-4");
     }
 
     async selectTDC(){
@@ -190,6 +206,38 @@ export class transactionPage{
         await this.btnDownloadCSV.click();
         const download = await downloadPromise;
         await expect(download).toBeTruthy();
+    }
+
+    async viewTransactionDetails(){
+        await this.transactionItemList.nth(0).click();
+        await Promise.all([
+            expect(this.detailsAccName).toBeVisible(),
+            expect(this.detailsBalance).toBeVisible(),
+            expect(this.detailsCategory).toBeVisible(),
+            expect(this.detailsAmountLabel).toBeVisible(),
+            expect(this.detailsName.nth(0)).toContainText("Fecha de transacción"),
+            expect(this.detailsName.nth(1)).toContainText("Fecha de aplicación"),
+            expect(this.detailsName.nth(2)).toContainText("Descripción"),
+            expect(this.detailsName.nth(3)).toContainText("Número del cheque"),
+            expect(this.detailsName.nth(4)).toContainText("Monto débito"),
+            expect(this.detailsName.nth(5)).toContainText("Monto crédito"),
+            expect(this.detailsName.nth(6)).toContainText("Estatus de la transacción"),
+            expect(this.detailsName.nth(7)).toContainText("Balance total"),
+            expect(this.detailsName.nth(8)).toContainText("Código de aprobación"),
+            expect(this.detailsName.nth(9)).toContainText("Número de referencia"),
+            expect(this.detailsInfo.nth(0)).toBeVisible(),
+            expect(this.detailsInfo.nth(1)).toBeVisible(),
+            expect(this.detailsInfo.nth(2)).toBeVisible(),
+            expect(this.detailsInfo.nth(3)).toBeVisible(),
+            expect(this.detailsInfo.nth(4)).toBeVisible(),
+            expect(this.detailsInfo.nth(5)).toBeVisible(),
+            expect(this.detailsInfo.nth(6)).toBeVisible(),
+            expect(this.detailsInfo.nth(7)).toBeVisible(),
+            expect(this.detailsInfo.nth(8)).toBeVisible(),
+            expect(this.detailsInfo.nth(9)).toBeVisible(),
+            expect(this.detailsImgHeader).toContainText("Imágenes de cheques"),
+            expect(this.btnAddNote).toContainText("Agregar nota")
+        ]);
     }
 
 }

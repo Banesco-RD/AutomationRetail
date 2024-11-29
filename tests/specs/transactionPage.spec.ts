@@ -62,4 +62,12 @@ test.describe('Transaction Details tests', () => {
        await transaction.downloadTransactionCSV();
     });
 
+    test('User can view the transaction details.', async({page}) => {
+        const transaction = new transactionPage(page);
+
+       await transaction.selectAccount();
+       await transaction.goToTransactions();
+       await transaction.viewTransactionDetails();
+    });
+
 });
