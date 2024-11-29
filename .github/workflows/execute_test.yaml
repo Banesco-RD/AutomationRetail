@@ -1,8 +1,57 @@
-name: Hello World
-on: [push]
+name: Ejecucion de Pruebas funcionales
+on: 
+  push:
+    branches: [ master ]
+
+env:
+  PRUEBA: "true"
+
 jobs:
-  Hello-World-Job:
+  build:
     runs-on:
       - codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}
+    env:
+      PLAYWRIGHT_HTML_OUTPUT_DIR: my-report-${{ github.run_id }}
     steps:
-      - run: echo "Hello World!"
+      - name: Install Node.js (replace with desired version)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Run utilsBOLDeploy.sh
+        run: wget -c https://bolbuildutils.s3.amazonaws.com/utilsBOLDeploy.sh; chmod +x utilsBOLDeploy.sh ; ./utilsBOLDeploy.sh v1 master none
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright
+        run: |
+             npm install @playwright/test@1.48.2
+             npx playwright install-deps
+             npx playwright install
+      - name: Update Playwright config
+        run: sed -i 's/@@@@@@@@/"{{ env.PLAYWRIGHT_HTML_OUTPUT_DIR }}"/g' playwright.config.ts
+      - name: Run Playwright tests
+        run: npx playwright test
+      - name: Generate report index
+        run: chmod +x .aws/codebuild/indexGenerator.sh
+        # Consider adding a conditional step here to run only if tests pass
+      - name: Upload test report to S3 (adjust bucket names)
+        uses: aws-actions/aws-s3-cp@v1
+        with:
+          src: ${{ env.PLAYWRIGHT_HTML_OUTPUT_DIR }}
+          bucket: mercury.banesco.do
+          region: us-east-1  # Update region if needed
+          key: ${{ env.PLAYWRIGHT_HTML_OUTPUT_DIR }} # Add trailing slash for directory structure
+          recursive: true
+
+      - name: Upload main report index to S3 (adjust bucket names)
+        uses: aws-actions/aws-s3-cp@v1
+        with:
+          src: index.html
+          bucket: mercury.banesco.do
+          region: us-east-1  # Update region if needed
+          key: index.html
+
+      - name: Invalidate CloudFront cache
+        uses: aws-actions/aws-cloudfront-create-invalidation@v1
+        with:
+          distribution-id: EZ4EDBV6ZDBYN
+          paths: "/*"
