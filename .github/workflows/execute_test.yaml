@@ -9,7 +9,7 @@ env:
 jobs:
   build:
     runs-on: [
-      {'buildspec-override': true},
+      {"buildspec-override": "true"},
       codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}
       ]
     env:
