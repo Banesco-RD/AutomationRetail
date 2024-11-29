@@ -2,16 +2,13 @@ name: Ejecucion de Pruebas funcionales
 on: 
   push:
     branches: [ master ]
-
 env:
   PRUEBA: "true"
   PLAYWRIGHT_HTML_OUTPUT_DIR: my-report-${{ github.run_id }}
 jobs:
   build:
     runs-on: [
-      { 'buildspec-override': true },
-      'codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}'
-    ]
+      { 'buildspec-override': true },'codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}']
     steps:
       - name: Install Node.js (replace with desired version)
         uses: actions/setup-node@v3
