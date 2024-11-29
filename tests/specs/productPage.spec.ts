@@ -7,17 +7,7 @@ test.beforeEach(async({page}) =>{//go to BD retail
     await commonObj.goToBanescoRetail();
 });
 
-test.describe('LogOut Test.', () => {
 
-    test('User can Logout.', async({page}) => {
-        const commonObj = new common(page);
-
-        await commonObj.logOut();
-    });
-
-});
-
-/*
 test.describe('Product Summary page tests.', () => {
 
     test('User is able to see all available products', async({page}) => {
@@ -44,5 +34,9 @@ test.describe('Product Summary page tests.', () => {
         await product.quickActions_PayService();
     });
 
+    test('User is able to use the quick actions to access Pay TDC.', async({page}) => {
+        const product = new productPage(page);
+
+        await product.quickActions_PayTDC();
+    });
 });
-*/

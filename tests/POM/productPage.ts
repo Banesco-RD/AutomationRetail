@@ -47,6 +47,7 @@ export class productPage{
         this.headerQuickAction = page.locator("h3.mb-3");
         this.urlMultiWithdraw = page.locator("a[title='Multicredito withdrawal']");
         this.urlServicePay = page.locator("a[title='Servicies and taxes']");
+        this.urlPayTDC = page.locator("a[title='Banesco credit cards']");
     }
 
     async productSummary(){

@@ -29,16 +29,17 @@ export default defineConfig({
   /* reporter: [['html', { open: 'never'}]], */
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   expect:{
-    timeout: 20000
+    timeout: 30000
   },
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-    actionTimeout: 20000,
-    screenshot: 'only-on-failure',
+    trace: 'on',
+    actionTimeout: 30000,
+    screenshot: 'on',
+    video: 'on',
   },
 
   /* Configure projects for major browsers */
@@ -55,11 +56,20 @@ export default defineConfig({
     },
     {
       name: 'Site_Chrome',
+      teardown: 'cleanup',
       use: { 
         ...devices['Desktop Chrome'],
         storageState: './tests/specs/setup/sessionFile.json'
       },
       dependencies: ['setup'],
+    },
+    {
+      name: 'cleanup',
+      testMatch: /global\.teardown\.ts/,
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: './tests/specs/setup/sessionFile.json'
+      },
     },
     /*
     {
