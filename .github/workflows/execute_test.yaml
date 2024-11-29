@@ -6,7 +6,6 @@ on:
 env:
   PRUEBA: "true"
   PLAYWRIGHT_HTML_OUTPUT_DIR: my-report-${{ github.run_id }}
-
 jobs:
   build:
     runs-on: [
