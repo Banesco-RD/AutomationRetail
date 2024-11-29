@@ -3,6 +3,6 @@ on: [push]
 jobs:
   Hello-World-Job:
     runs-on:
-      - codebuild-bol-automation-action-${{ github.run_id }}-${{ github.run_attempt }}
+      - codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - run: echo "Hello World!"
