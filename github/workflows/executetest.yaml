@@ -1,1 +1,1 @@
-runs-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}
+runs-on: bol-automation-action-${{ github.run_id }}-${{ github.run_attempt }}
