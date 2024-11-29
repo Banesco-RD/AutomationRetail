@@ -1,1 +1,8 @@
-runs-on: codebuild-bol-automation-action-${{ github.run_id }}-${{ github.run_attempt }}
+name: Hello World
+on: [push]
+jobs:
+  Hello-World-Job:
+    runs-on:
+      - codebuild-bol-automation-action-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - run: echo "Hello World!"
