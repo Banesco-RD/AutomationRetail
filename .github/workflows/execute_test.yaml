@@ -13,7 +13,6 @@ jobs:
       { 'buildspec-override': true },
       'codebuild-bol-automatization-action2-${{ github.run_id }}-${{ github.run_attempt }}'
     ]
-
     steps:
       - name: Install Node.js (replace with desired version)
         uses: actions/setup-node@v3
