@@ -36,6 +36,12 @@ export class transactionPage{
     readonly detailsInfo: Locator;
     readonly detailsImgHeader: Locator;
     readonly btnAddNote: Locator;
+    readonly txtNote: Locator;
+    readonly btnCancelNote: Locator;
+    readonly btnSaveNote: Locator;
+    readonly newNote: Locator;
+    readonly btnEditNote: Locator;
+    readonly btnDeleteNote: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -72,6 +78,12 @@ export class transactionPage{
         this.detailsInfo = page.locator("div.pb-4 li span");
         this.detailsImgHeader = page.locator("div.my-3 h3");
         this.btnAddNote = page.locator("button.mt-4");
+        this.txtNote = page.locator("textarea.form-control");
+        this.btnSaveNote = page.locator("div.bb-button-bar button.m-2").nth(0);
+        this.btnCancelNote = page.locator("div.bb-button-bar button.m-2").nth(1);
+        this.newNote = page.locator("div.bn-transaction-item-details__note div").nth(2);
+        this.btnEditNote = page.locator("bb-icon-ui[name='edit']");
+        this.btnDeleteNote = page.locator("bb-icon-ui[name='delete']");
     }
 
     async selectTDC(){
@@ -208,8 +220,13 @@ export class transactionPage{
         await expect(download).toBeTruthy();
     }
 
-    async viewTransactionDetails(){
+    async goToFirstTransaction(){
         await this.transactionItemList.nth(0).click();
+        await expect(this.detailsAccName).toBeVisible();
+    }
+
+    async viewTransactionDetails(){
+        await this.goToFirstTransaction();
         await Promise.all([
             expect(this.detailsAccName).toBeVisible(),
             expect(this.detailsBalance).toBeVisible(),
@@ -238,6 +255,58 @@ export class transactionPage{
             expect(this.detailsImgHeader).toContainText("Imágenes de cheques"),
             expect(this.btnAddNote).toContainText("Agregar nota")
         ]);
+    }
+
+    async validateNotesControllers(){
+        await Promise.all([
+            expect(this.txtNote).toBeVisible(),
+            expect(this.btnCancelNote).toBeVisible(),
+            expect(this.btnSaveNote).toBeVisible()
+        ]);
+    }
+
+    async validateCreatedNote(noteText){
+        await Promise.all([
+            expect(this.newNote).toContainText(noteText),
+            expect(this.btnEditNote).toBeVisible(),
+            expect(this.btnDeleteNote).toBeVisible()
+        ]);
+    }
+
+    async addNote(){
+        await this.goToFirstTransaction();
+        await this.btnAddNote.click();
+        await this.validateNotesControllers();
+
+        await this.txtNote.fill("Note test description.");
+        await this.btnSaveNote.click();
+        await this.validateCreatedNote("Note test description.");
+    }
+
+    async editNote(){
+        await this.goToFirstTransaction();
+        await this.validateCreatedNote("Note test description.");
+        await this.btnEditNote.click();
+        await this.validateNotesControllers();
+        await this.txtNote.fill('');
+        await this.txtNote.fill("EDITED: Note test description.");
+        await this.btnSaveNote.click();
+        await this.validateCreatedNote("EDITED: Note test description.");
+    }
+
+    async deleteNote(){
+        await this.goToFirstTransaction();
+        await this.validateCreatedNote("EDITED: Note test description.");
+        await this.btnDeleteNote.click();
+        await expect(this.btnAddNote).toBeVisible();
+    }
+
+    async cancelNote(){
+        await this.goToFirstTransaction();
+        await this.btnAddNote.click();
+        await this.validateNotesControllers();
+        await this.btnCancelNote.click();
+        await expect(this.btnAddNote).toBeVisible();
     }
 
 }

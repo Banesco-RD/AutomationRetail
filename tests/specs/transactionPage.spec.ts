@@ -71,3 +71,39 @@ test.describe('Transaction Details tests', () => {
     });
 
 });
+
+test.describe.serial('Transaction notes tests.', () => {
+
+    test('User can cancel notes in a transaction.', async({page}) => {
+        const transaction = new transactionPage(page);
+
+       await transaction.selectAccount();
+       await transaction.goToTransactions();
+       await transaction.cancelNote();
+    });
+
+    test('User can add notes to a transaction.', async({page}) => {
+        const transaction = new transactionPage(page);
+
+       await transaction.selectAccount();
+       await transaction.goToTransactions();
+       await transaction.addNote();
+    });
+
+    test('User can edit notes from a transaction.', async({page}) => {
+        const transaction = new transactionPage(page);
+
+       await transaction.selectAccount();
+       await transaction.goToTransactions();
+       await transaction.editNote();
+    });
+
+    test('User can delete notes from a transaction.', async({page}) => {
+        const transaction = new transactionPage(page);
+
+       await transaction.selectAccount();
+       await transaction.goToTransactions();
+       await transaction.deleteNote();
+    });
+
+});
