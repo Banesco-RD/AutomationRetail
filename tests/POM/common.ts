@@ -30,7 +30,6 @@ export class common{
 
     async goToBanescoRetailLogin(){
         await this.page.goto(process.env.BASEURL as string);
-        await console.log(process.env.BASEURL);
         await this.btnLanguage.click();
         await this.btnSpanish.click();
         await expect(this.txtUser).toBeVisible();
